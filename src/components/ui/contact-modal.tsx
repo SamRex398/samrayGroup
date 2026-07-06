@@ -38,16 +38,16 @@ export function ContactModal() {
     return (
       <ModalShell title="Message sent" subtitle="Talk to us" onClose={close}>
         <div className="flex flex-col items-center text-center py-4">
-          <div className="w-14 h-14 rounded-full bg-teal/15 text-teal flex items-center justify-center mb-5">
+          <div className="w-14 h-14 rounded-2xl bg-success/10 text-success flex items-center justify-center mb-5">
             <Check size={24} />
           </div>
-          <p className="text-textink/70 leading-relaxed max-w-sm">
+          <p className="text-textsecondary leading-relaxed max-w-sm">
             Thanks, {form.name.split(" ")[0]}. A member of the Samray Energy team will reply to{" "}
-            <span className="text-textink font-medium">{form.email}</span> within one business day.
+            <span className="text-textprimary font-medium">{form.email}</span> within one business day.
           </p>
           <button
             onClick={close}
-            className="mt-7 inline-flex items-center gap-2 rounded-full bg-ink text-paper px-6 py-3 text-sm font-medium hover:bg-surface2 transition-colors"
+            className="mt-7 inline-flex items-center gap-2 rounded-btn bg-primary text-white px-6 py-3 text-sm font-medium hover:bg-deepblue-light transition-colors"
           >
             Done
           </button>
@@ -79,7 +79,7 @@ export function ContactModal() {
           onBlur={() => setTouched({ ...touched, email: true })}
         />
         <div>
-          <label htmlFor="c-msg" className="block text-xs font-mono tracking-wide text-textink/50 mb-1.5">
+          <label htmlFor="c-msg" className="block text-xs font-mono tracking-wide text-textmuted mb-1.5">
             MESSAGE
           </label>
           <textarea
@@ -90,15 +90,15 @@ export function ContactModal() {
             onBlur={() => setTouched({ ...touched, message: true })}
             placeholder="Tell us what you're working on..."
             className={`w-full rounded-xl border px-4 py-3 text-sm bg-white outline-none transition-colors resize-none ${
-              touched.message && errors.message ? "border-red-400" : "border-textink/15 focus:border-copper"
+              touched.message && errors.message ? "border-danger" : "border-borderc focus:border-primary"
             }`}
           />
-          {touched.message && errors.message && <p className="mt-1.5 text-xs text-red-500">{errors.message}</p>}
+          {touched.message && errors.message && <p className="mt-1.5 text-xs text-danger">{errors.message}</p>}
         </div>
         <button
           type="submit"
           disabled={status === "sending"}
-          className="w-full inline-flex items-center justify-center gap-2 rounded-full bg-copper text-white px-6 py-3.5 text-sm font-medium hover:bg-copper-light transition-colors disabled:opacity-60"
+          className="w-full inline-flex items-center justify-center gap-2 rounded-btn bg-primary text-white px-6 py-3.5 text-sm font-medium hover:bg-deepblue-light transition-colors disabled:opacity-60 shadow-card"
         >
           {status === "sending" ? (
             <>
@@ -136,7 +136,7 @@ function Field({
 }) {
   return (
     <div>
-      <label htmlFor={id} className="block text-xs font-mono tracking-wide text-textink/50 mb-1.5">
+      <label htmlFor={id} className="block text-xs font-mono tracking-wide text-textmuted mb-1.5">
         {label.toUpperCase()}
       </label>
       <input
@@ -147,10 +147,10 @@ function Field({
         onChange={(e) => onChange(e.target.value)}
         onBlur={onBlur}
         className={`w-full rounded-xl border px-4 py-3 text-sm bg-white outline-none transition-colors ${
-          error ? "border-red-400" : "border-textink/15 focus:border-copper"
+          error ? "border-danger" : "border-borderc focus:border-primary"
         }`}
       />
-      {error && <p className="mt-1.5 text-xs text-red-500">{error}</p>}
+      {error && <p className="mt-1.5 text-xs text-danger">{error}</p>}
     </div>
   );
 }

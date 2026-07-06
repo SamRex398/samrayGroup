@@ -25,7 +25,7 @@ export function ModalShell({ title, subtitle, onClose, children, wide }: ModalSh
   return (
     <div className="fixed inset-0 z-[100] flex items-end sm:items-center justify-center p-0 sm:p-6">
       <div
-        className="absolute inset-0 bg-ink/70 backdrop-blur-sm animate-[fadeIn_.2s_ease_forwards]"
+        className="absolute inset-0 bg-deepblue/60 backdrop-blur-sm animate-[fadeIn_.18s_ease_forwards]"
         onClick={onClose}
         aria-hidden="true"
       />
@@ -33,19 +33,19 @@ export function ModalShell({ title, subtitle, onClose, children, wide }: ModalSh
         role="dialog"
         aria-modal="true"
         aria-labelledby="modal-title"
-        className={`relative bg-paper text-textink rounded-t-3xl sm:rounded-3xl w-full ${
+        className={`relative bg-surface text-textprimary rounded-t-2xl sm:rounded-2xl w-full ${
           wide ? "sm:max-w-2xl" : "sm:max-w-md"
-        } max-h-[90vh] overflow-y-auto p-7 sm:p-9 shadow-2xl animate-[slideUp_.25s_ease_forwards]`}
+        } max-h-[90vh] overflow-y-auto p-7 sm:p-9 shadow-2xl border border-borderc animate-[slideUp_.22s_ease_forwards]`}
       >
         <button
           onClick={onClose}
           aria-label="Close dialog"
-          className="absolute top-5 right-5 w-9 h-9 rounded-full flex items-center justify-center text-textink/50 hover:text-textink hover:bg-textink/5 transition-colors"
+          className="absolute top-5 right-5 w-9 h-9 rounded-xl flex items-center justify-center text-textmuted hover:text-textprimary hover:bg-surface-alt transition-colors"
         >
           <X size={18} />
         </button>
-        <div className="font-mono text-xs tracking-widest uppercase text-copper">{subtitle}</div>
-        <h3 id="modal-title" className="font-display text-2xl sm:text-3xl mt-2 tracking-tight pr-8">
+        <div className="font-mono text-xs tracking-widest uppercase text-primary">{subtitle}</div>
+        <h3 id="modal-title" className="font-display font-semibold text-2xl sm:text-3xl mt-2 tracking-tight pr-8 text-textprimary">
           {title}
         </h3>
         <div className="mt-6">{children}</div>

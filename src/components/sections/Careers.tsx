@@ -7,24 +7,25 @@ export function Careers() {
   const { open } = useModal();
 
   return (
-    <section id="careers" className="bg-ink text-paper py-24">
-      <div className="max-w-7xl mx-auto px-6 lg:px-10">
+    <section id="careers" className="bg-hero-gradient text-white py-24 relative overflow-hidden">
+      <div className="absolute inset-0 blueprint-grid" aria-hidden="true" />
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10">
         <Reveal>
-          <div className="rounded-3xl bg-gradient-to-br from-surface to-surface2 border border-line p-10 sm:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
+          <div className="rounded-card bg-white/[0.07] border border-white/15 p-10 sm:p-14 flex flex-col lg:flex-row lg:items-center justify-between gap-10">
             <div className="max-w-xl">
-              <div className="w-11 h-11 rounded-xl bg-copper/15 text-copper flex items-center justify-center mb-6">
+              <div className="w-11 h-11 rounded-xl bg-gold/20 text-solargold flex items-center justify-center mb-6">
                 <Briefcase size={20} />
               </div>
-              <h2 className="font-display text-3xl tracking-tight">
+              <h2 className="font-display font-semibold text-3xl tracking-tight">
                 Join a dynamic team building Africa&apos;s energy future
               </h2>
-              <p className="mt-4 text-paper/60 leading-relaxed">
+              <p className="mt-4 text-white/70 leading-relaxed">
                 We&apos;re growing across upstream, midstream, and downstream operations. If you want
                 to work on real infrastructure with real impact, we want to hear from you.
               </p>
             </div>
             <div className="flex-shrink-0">
-              <Button onClick={() => open("roles")}>
+              <Button variant="accent" onClick={() => open("roles")}>
                 See open roles <ArrowRight size={16} />
               </Button>
             </div>

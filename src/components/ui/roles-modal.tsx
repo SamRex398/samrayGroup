@@ -10,7 +10,6 @@ interface Role {
 }
 
 const ROLES: Role[] = [
- 
 ];
 
 export function RolesModal() {
@@ -30,18 +29,18 @@ export function RolesModal() {
         {ROLES.map((r) => (
           <div
             key={r.title}
-            className="flex items-center justify-between gap-4 rounded-xl border border-textink/10 px-5 py-4 hover:border-copper/40 transition-colors"
+            className="flex items-center justify-between gap-4 rounded-xl border border-borderc px-5 py-4 hover:border-primary/40 transition-colors"
           >
             <div>
-              <div className="font-display text-base">{r.title}</div>
-              <div className="text-xs text-textink/50 mt-1 font-mono tracking-wide">
+              <div className="font-semibold text-base text-textprimary">{r.title}</div>
+              <div className="text-xs text-textmuted mt-1 font-mono tracking-wide">
                 {r.team.toUpperCase()} · {r.location}
               </div>
             </div>
             <button
               onClick={() => apply(r.title)}
-              className={`flex-shrink-0 inline-flex items-center gap-1.5 rounded-full px-4 py-2 text-xs font-medium transition-colors ${
-                applied[r.title] ? "bg-teal/15 text-teal" : "bg-ink text-paper hover:bg-surface2"
+              className={`flex-shrink-0 inline-flex items-center gap-1.5 rounded-xl px-4 py-2 text-xs font-medium transition-colors ${
+                applied[r.title] ? "bg-success/10 text-success" : "bg-primary text-white hover:bg-deepblue-light"
               }`}
             >
               {applied[r.title] ? (
@@ -57,7 +56,7 @@ export function RolesModal() {
           </div>
         ))}
       </div>
-      <p className="mt-6 text-xs text-textink/45 leading-relaxed">
+      <p className="mt-6 text-xs text-textmuted leading-relaxed">
         Applying opens a pre-filled email to careers@samraygroup.com. Don&apos;t see the right role?
         Use the contact form to introduce yourself.
       </p>

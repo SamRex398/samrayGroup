@@ -4,3 +4,10 @@ export const IMG = {
   rig: "https://images.unsplash.com/photo-1648555394313-494797ad48fc?auto=format&fit=crop&w=1200&q=80",
   farm: "https://images.unsplash.com/photo-1503427128716-12b0ed4822bb?auto=format&fit=crop&w=1200&q=80",
 } as const;
+
+// Served from /public — logo-light-bg.png for use on white/paper surfaces,
+// logo-dark-bg.png for use on Deep Energy Blue surfaces (footer, dark panels).
+export const LOGO = {
+  light: "/logo-light-bg.png",
+  dark: "/logo-dark-bg.png",
+} as const;

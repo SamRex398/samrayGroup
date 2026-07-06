@@ -17,53 +17,52 @@ export function Hero() {
   const { open } = useModal();
 
   return (
-    <section id="top" className="relative bg-ink text-paper overflow-hidden grain">
+    <section id="top" className="relative bg-hero-gradient text-white overflow-hidden pt-20">
+      <div className="absolute inset-0 blueprint-grid" aria-hidden="true" />
       <div className="absolute inset-0" aria-hidden="true">
         <img
           src={IMG.heroRig}
           alt=""
-          className="w-full h-full object-cover opacity-40"
+          className="w-full h-full object-cover opacity-[0.16] mix-blend-luminosity"
           loading="eager"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-ink via-ink/80 to-ink/50" />
-        <div className="absolute inset-0 bg-gradient-to-r from-ink via-ink/40 to-transparent" />
       </div>
 
-      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-40 pb-28 lg:pt-48 lg:pb-36">
+      <div className="relative max-w-7xl mx-auto px-6 lg:px-10 pt-24 pb-24 lg:pt-32 lg:pb-32">
         <Reveal>
-          <Eyebrow>Samray Energy Solutions Ltd</Eyebrow>
+          <Eyebrow dark>Samray Energy Solutions Ltd</Eyebrow>
         </Reveal>
 
         <Reveal delay={80}>
-          <h1 className="font-display font-medium text-[2.6rem] leading-[1.05] sm:text-6xl lg:text-[4.5rem] mt-5 max-w-4xl tracking-tight">
-            Powering Africa&apos;s energy value chain, end to end.
+          <h1 className="font-display font-semibold text-[2.4rem] leading-[1.1] sm:text-5xl lg:text-6xl mt-5 max-w-3xl tracking-tight">
+            Engineering Africa&apos;s energy value chain, end to end.
           </h1>
         </Reveal>
 
         <Reveal delay={160}>
-          <p className="mt-6 max-w-xl text-paper/70 text-lg leading-relaxed">
-            We invest in and operate across upstream, midstream, and downstream energy —
-            with a track record built on Africa&apos;s largest producing gas fields.
+          <p className="mt-6 max-w-xl text-white/75 text-lg leading-relaxed">
+            We invest in, engineer, and operate across upstream, midstream, and downstream
+            energy — with a track record built on Africa&apos;s largest producing gas fields.
           </p>
         </Reveal>
 
         <Reveal delay={240}>
           <div className="mt-9 flex flex-wrap items-center gap-4">
-            <Button onClick={() => scrollToId("projects")}>
+            <Button variant="accent" onClick={() => scrollToId("projects")}>
               Explore our work <ArrowRight size={16} />
             </Button>
-            <Button variant="ghost" onClick={() => open("roles")}>
+            <Button variant="ghostDark" onClick={() => open("roles")}>
               See open roles
             </Button>
           </div>
         </Reveal>
 
         <Reveal delay={340}>
-          <div className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-px bg-line rounded-2xl overflow-hidden border border-line max-w-3xl">
+          <div className="mt-20 grid grid-cols-2 sm:grid-cols-4 gap-px bg-white/10 rounded-2xl overflow-hidden border border-white/10 max-w-3xl">
             {STATS.map(([n, l]) => (
-              <div key={l} className="bg-surface/80 backdrop-blur-sm px-5 py-6">
-                <div className="font-display text-2xl sm:text-3xl text-paper">{n}</div>
-                <div className="text-xs text-paper/50 mt-1 leading-snug">{l}</div>
+              <div key={l} className="bg-white/[0.06] px-5 py-6">
+                <div className="font-display font-semibold text-2xl sm:text-3xl text-white">{n}</div>
+                <div className="text-xs text-white/60 mt-1 leading-snug font-mono">{l}</div>
               </div>
             ))}
           </div>

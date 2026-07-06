@@ -4,6 +4,7 @@ import { Button } from "../ui/button";
 import { cn } from "../../lib/utils";
 import { scrollToId } from "../../lib/scroll";
 import { useModal } from "../ui/modal-context";
+import { LOGO } from "../../lib/images";
 
 const LINKS = ["About", "Value chain", "Sectors", "Projects", "Careers"];
 
@@ -21,16 +22,19 @@ export function Nav() {
   return (
     <header
       className={cn(
-        "fixed top-0 inset-x-0 z-50 transition-all duration-300",
-        scrolled ? "bg-ink/90 backdrop-blur-md border-b border-line" : "bg-transparent"
+        "fixed top-0 inset-x-0 z-50 bg-white transition-shadow duration-300",
+        scrolled
+          ? "shadow-[0_1px_0_rgba(217,226,239,1),0_4px_16px_-8px_rgba(26,35,126,0.12)]"
+          : "border-b border-borderc"
       )}
     >
-      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-16 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 lg:px-10 h-20 flex items-center justify-between">
         <button
           onClick={() => scrollToId("top")}
-          className="font-display text-lg font-semibold text-paper tracking-tight"
+          className="flex items-center"
+          aria-label="Samray Energy Solutions — home"
         >
-          Samray <span className="text-copper">Energy</span>
+          <img src={LOGO.light} alt="Samray Energy Solutions" className="h-8 sm:h-9 w-auto" />
         </button>
 
         <nav className="hidden md:flex items-center gap-8" aria-label="Primary">
@@ -38,7 +42,7 @@ export function Nav() {
             <button
               key={l}
               onClick={() => scrollToId(l.toLowerCase().replace(" ", "-"))}
-              className="text-sm text-paper/70 hover:text-paper transition-colors"
+              className="text-sm font-medium text-textsecondary hover:text-primary transition-colors"
             >
               {l}
             </button>
@@ -52,7 +56,7 @@ export function Nav() {
         </div>
 
         <button
-          className="md:hidden text-paper"
+          className="md:hidden text-textprimary"
           onClick={() => setMobileOpen((v) => !v)}
           aria-label={mobileOpen ? "Close menu" : "Open menu"}
           aria-expanded={mobileOpen}
@@ -62,7 +66,7 @@ export function Nav() {
       </div>
 
       {mobileOpen && (
-        <div className="md:hidden bg-ink border-t border-line px-6 py-6 flex flex-col gap-5">
+        <div className="md:hidden bg-white border-t border-borderc px-6 py-6 flex flex-col gap-5">
           {LINKS.map((l) => (
             <button
               key={l}
@@ -70,7 +74,7 @@ export function Nav() {
                 scrollToId(l.toLowerCase().replace(" ", "-"));
                 setMobileOpen(false);
               }}
-              className="text-base text-paper/80 text-left"
+              className="text-base text-textsecondary text-left"
             >
               {l}
             </button>

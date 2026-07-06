@@ -6,6 +6,7 @@ interface Sector {
   icon: LucideIcon;
   name: string;
   copy: string;
+  gold?: boolean;
 }
 
 const SECTORS: Sector[] = [
@@ -13,6 +14,7 @@ const SECTORS: Sector[] = [
     icon: Droplet,
     name: "Energy",
     copy: "Upstream, midstream, and downstream investment and operations across oil and gas.",
+    gold: true,
   },
   {
     icon: Wheat,
@@ -33,11 +35,11 @@ const SECTORS: Sector[] = [
 
 export function Sectors() {
   return (
-    <section id="sectors" className="bg-ink text-paper py-28 lg:py-36">
+    <section id="sectors" className="bg-surface-alt py-24 lg:py-32">
       <div className="max-w-7xl mx-auto px-6 lg:px-10">
         <Reveal>
           <Eyebrow>Where we operate</Eyebrow>
-          <h2 className="font-display text-3xl sm:text-4xl mt-4 max-w-xl tracking-tight">
+          <h2 className="font-display font-semibold text-3xl sm:text-4xl mt-4 max-w-xl tracking-tight text-textprimary">
             Four sectors, one investment discipline
           </h2>
         </Reveal>
@@ -45,12 +47,16 @@ export function Sectors() {
         <div className="mt-14 grid sm:grid-cols-2 lg:grid-cols-4 gap-5">
           {SECTORS.map((s, i) => (
             <Reveal key={s.name} delay={i * 90}>
-              <div className="group rounded-2xl border border-line p-7 h-full hover:border-copper/50 hover:bg-surface transition-all duration-300">
-                <div className="w-11 h-11 rounded-xl bg-surface2 flex items-center justify-center text-copper group-hover:bg-copper group-hover:text-white transition-colors duration-300">
+              <div className="group bg-white rounded-card border border-borderc shadow-card hover:shadow-cardhover hover:-translate-y-0.5 transition-all duration-300 p-7 h-full">
+                <div
+                  className={`w-11 h-11 rounded-xl flex items-center justify-center ${
+                    s.gold ? "bg-gold/15 text-[#8a6a00]" : "bg-primary/10 text-primary"
+                  }`}
+                >
                   <s.icon size={20} />
                 </div>
-                <h3 className="font-display text-lg mt-5">{s.name}</h3>
-                <p className="mt-2 text-sm text-paper/55 leading-relaxed">{s.copy}</p>
+                <h3 className="font-semibold text-lg mt-5 text-textprimary">{s.name}</h3>
+                <p className="mt-2 text-sm text-textsecondary leading-relaxed">{s.copy}</p>
               </div>
             </Reveal>
           ))}
