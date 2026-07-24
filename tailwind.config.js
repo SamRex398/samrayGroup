@@ -1,7 +1,7 @@
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: "class",
-  content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}"],
+  content: ["./index.html", "./src/**/*.{js,jsx}"],
   theme: {
     extend: {
       colors: {
@@ -28,8 +28,8 @@ export default {
         mono: ["'IBM Plex Mono'", "monospace"],
       },
       borderRadius: {
-        card: "1rem", // 16px per spec
-        btn: "0.75rem", // 12px per spec
+        card: "1rem",
+        btn: "0.75rem",
       },
       boxShadow: {
         card: "0 1px 2px rgba(26,35,126,0.04), 0 8px 24px -8px rgba(26,35,126,0.10)",

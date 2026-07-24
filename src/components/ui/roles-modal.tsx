@@ -10,6 +10,10 @@ interface Role {
 }
 
 const ROLES: Role[] = [
+  { title: "Reservoir Engineer", team: "Upstream", location: "Lagos, Nigeria" },
+  { title: "HSE Officer", team: "Midstream", location: "Port Harcourt, Nigeria" },
+  { title: "Agronomy Lead", team: "Agriculture", location: "Ogun State, Nigeria" },
+  { title: "3D Motion Designer", team: "Media", location: "Lagos, Nigeria (Hybrid)" },
 ];
 
 export function RolesModal() {
