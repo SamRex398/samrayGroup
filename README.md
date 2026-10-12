@@ -1,90 +1,107 @@
-# Samray Energy Solutions — Website Redesign (JSX)
+# Samray Group — Website
 
-A React + JSX + Tailwind rebuild of the Samray Energy page, built to Samray's official
-design system (Primary Blue / Deep Energy Blue / Energy Gold), using the company's real
-logo. No TypeScript — plain `.jsx`/`.js` throughout.
+A responsive React and Vite website for Samray Group. The Group site brings together
+Energy, Agriculture, Sports, and Technology & Media. Samray Energy Solutions has its
+own routes and uses the approved energy website copy; Technology & Media appears only
+as a Group-level interest.
 
-
-## Quick start
+## Run locally
 
 ```bash
 npm install
 npm run dev
 ```
 
-## What's intentionally left out (for now)
+Create a production build with `npm run build` and serve the generated `dist/` directory.
+The site uses clean URL paths, so production hosting must rewrite unknown paths to
+`index.html` for direct visits to inner pages.
 
-The contact form and "open roles" flow (and the modal system behind them) have been
-removed — not needed at this stage:
+## Main routes
 
-- No "Talk to us" button in the nav
-- No "See open roles" button in the hero or Careers band
-- No "Get in touch" / "Open roles" links in the footer
-- Project cards are static info panels (no click-to-inquire)
+| Route | Page |
+|---|---|
+| `/` | Samray Group homepage |
+| `/about` | About the Group |
+| `/businesses/energy` | Samray Energy Solutions |
+| `/businesses/agriculture` | Agriculture |
+| `/businesses/sports` | Sports |
+| `/businesses/technology-media` | Technology & Media (Group only) |
+| `/whatwedo` | Energy development and technical services |
+| `/projects` | Solar project portfolio |
+| `/projects/drc` | DRC solar PV project |
+| `/projects/car` | Central African Republic solar program |
+| `/experience` | Oil and gas technical services experience and selected references |
+| `/otherinterests` | Agriculture and Sports overview |
+| `/partner` | Energy partnership information |
+| `/contact` | Enquiry form |
+| `/legal`, `/privacy` | Legal notice and privacy information |
 
-The Careers section still exists as an informational band; add a CTA back in whenever
-a contact flow is ready.
+## Design system
 
-## Design tokens
+- **Palette:** Primary Blue `#2F35D3`, Deep Energy Blue `#1A237E`, Energy Gold
+  `#F4BE18`, Solar Gold `#FFD54A`, Paper `#FAFAF8`, Surface `#FFFFFF`, Surface Alt
+  `#F3F6FB`, Border `#D9E2EF`, and the approved primary, secondary, and muted text
+  colors.
+- **Typography:** Space Grotesk for editorial headlines, Inter for body copy, and
+  Space Mono for labels and technical details.
+- **Components:** Inter 600 primary-blue buttons with 12px corners; 20px cards; a
+  white 84px navigation bar; four-column glass stat cards on dark sections.
+- **Motion:** restrained reveal and hover transitions, with a full
+  `prefers-reduced-motion` fallback and visible content when Intersection Observer is
+  unavailable.
+- **Navigation:** scroll-aware desktop header and a keyboard-operable mobile menu.
 
-| Token | Value | Use |
-|---|---|---|
-| Primary Blue | `#2F35D3` | Buttons, links, icons, active nav |
-| Deep Energy Blue | `#1A237E` | Hero, footer, dark/premium sections |
-| Energy Gold | `#F4BE18` | Sparing accent — highlights, energy icons |
-| Solar Gold | `#FFD54A` | Secondary accent, gradients |
-| Paper / Surface / Surface Alt | `#FAFAF8` / `#FFFFFF` / `#F3F6FB` | Backgrounds |
-| Border | `#D9E2EF` | Dividers, card borders |
-| Text Primary/Secondary/Muted | `#1A1F2E` / `#5D6678` / `#8B95A7` | Type hierarchy |
-| Success/Warning/Danger/Info | `#1FA971` / `#E59A00` / `#D64545` / `#2F7AE5` | Status colors |
+## Contact form integration
 
-**Typography:** Space Grotesk (hero + major section titles only), Inter (body, card
-titles), IBM Plex Mono (eyebrows, stat labels, technical tags).
+The contact form submits to the Node API in `server.js`, which validates the request,
+rejects the honeypot, applies a per-process limit of five enquiries per IP per 15
+minutes, and sends accepted messages through Resend. It never reports success until
+Resend accepts the message. The in-memory rate limit is a basic safeguard for a
+single API instance; use a shared rate-limit store before scaling the API horizontally.
 
-**Components:** Buttons — 12px radius (`rounded-btn`), Primary/Secondary/Accent variants.
-Cards — 16px radius (`rounded-card`), white background, thin blue-tinted border, soft
-shadow.
+The site is a Render Static Site, so deploy the API as a separate Render **Web
+Service** from this repository:
 
-**Signature element:** the animated Upstream → Midstream → Downstream flow diagram in
-`ValueChain.jsx`.
+1. Create a Render Web Service using Node 20 or newer. Set the build command to
+   `npm install`, the start command to `npm run start:api`, and the health-check path
+   to `/health`.
+2. Add these environment variables to the Web Service:
+   - `RESEND_API_KEY`: a Resend API key (keep it private; never use a `VITE_` prefix).
+   - `CONTACT_TO_EMAIL`: comma-separated recipient inboxes, for example
+     `as@samraygroup.com,info@samraygroup.com`.
+   - `CONTACT_FROM_EMAIL`: `Samray Website <website@samraygroup.com>` (use this
+     only after verifying `samraygroup.com` in Resend).
+   - `ALLOWED_ORIGINS`: the exact website origins allowed to submit, comma-separated
+     if needed (for example, `https://www.samraygroup.com,https://samraygroup.com`).
+3. In the Render Static Site settings, set the build command to
+   `npm install && npm run build`, the publish directory to `dist`, and the
+   build-time variable `VITE_CONTACT_ENDPOINT` to
+   `https://<your-api-service>.onrender.com/api/contact`. Redeploy the Static Site
+   whenever this endpoint changes.
 
-**Featured initiative:** `Projects.jsx` leads with a currently-signed project (Central
-African Republic solar-diesel hybridization) via `FeaturedInitiative.jsx`, ahead of the
-historical "Track record" grid.
+For local development, run the API and Vite in separate terminals. Configure the
+four API variables above in the API process, including
+`ALLOWED_ORIGINS=http://localhost:5173`, then run `npm run start:api` and `npm run
+dev` in the other terminal. Vite proxies `/api` requests to
+`http://localhost:10000` by default; override this with `CONTACT_API_PROXY_TARGET`
+if the API listens elsewhere.
 
-## Logo usage
+The API does not store enquiries. Resend delivers them to the configured inbox, with
+the enquirer's address set as reply-to. Confirm the sender domain in Resend and
+configure the production origins before testing a live submission. Never put API
+credentials in `VITE_` variables. Review the privacy and legal copy and confirm the
+company contact details before launch.
 
-- `public/logo-light-bg.png` — white/Paper surfaces (nav)
-- `public/logo-dark-bg.png` — Deep Energy Blue surfaces (footer)
+## Assets and launch checks
 
-Referenced via `src/lib/images.js` → `LOGO.light` / `LOGO.dark`.
-
-## Structure
-
-```
-src/
-  components/
-    ui/            Button, Reveal, Eyebrow/StatusBadge
-    sections/       Nav, Hero, ValueChain, About, Sectors, Projects,
-                     FeaturedInitiative, Careers, Footer
-  lib/              images.js, scroll.js, utils.js
-  App.jsx
-  main.jsx
-  index.css
-public/
-  logo-light-bg.png
-  logo-dark-bg.png
-```
-
-## Accessibility
-
-- Semantic landmarks, visible focus rings in Primary Blue
-- Decorative icons are `aria-hidden`
-- Type/background combinations checked against WCAG AA
-- Respects `prefers-reduced-motion`
-
-## Before shipping
-
-1. Replace Unsplash placeholder photography in `src/lib/images.js` with licensed
-   Samray photography
-2. Re-add a contact/careers flow when ready (form, email, or a connected CRM)
+The supplied `public/logo-light-bg.png` and `public/logo-dark-bg.png` logos are used
+throughout the shared header and footer. The current photography references remote
+Unsplash images in `src/lib/images.js` as visual placeholders; replace them with
+approved, licensed Samray photography before launch. Confirm project facts, project
+statuses, rights to publish the client and end-user references listed on the
+Experience page, leadership and governance details, image permissions, contact
+details, legal copy, and privacy handling before publication. The source content
+still has unresolved registered-address, email, telephone, and response-time fields.
+The About-page portfolio map describes areas of focus, not legal ownership or
+reporting lines. Technology & Media remains a Group-level interest per the Group
+redesign direction and is excluded from Samray Energy Solutions pages.

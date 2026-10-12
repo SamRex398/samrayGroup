@@ -7,8 +7,8 @@ export const IMG = {
     "https://images.unsplash.com/photo-1756913454478-e65f8bc67336?auto=format&fit=crop&w=1600&q=80",
 };
 
-// Served from /public — logo-light-bg.png for use on white/paper surfaces,
-// logo-dark-bg.png for use on Deep Energy Blue surfaces (footer, dark panels).
+// The transparent light logo sits on white/navy surfaces; use the dark-bg
+// variant only if the original background is intentionally visible.
 export const LOGO = {
   light: "/logo-light-bg.png",
   dark: "/logo-dark-bg.png",
