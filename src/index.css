@@ -21,6 +21,18 @@
   --warning: #e59a00;
   --danger: #d64545;
   --info: #2f7ae5;
+  --color-brand-primary: var(--primary);
+  --color-brand-secondary: var(--navy);
+  --color-accent: var(--gold);
+  --color-background: var(--paper);
+  --color-background-alt: var(--surface-alt);
+  --color-surface: var(--surface);
+  --color-text-primary: var(--ink);
+  --color-text-secondary: var(--ink-2);
+  --color-text-muted: #667084;
+  --color-border: var(--line);
+  --color-overlay: rgba(26, 35, 126, 0.78);
+  --color-motion-glow: rgba(244, 190, 24, 0.18);
   --serif: "Space Grotesk", "Arial", sans-serif;
   --sans: "Inter", "Arial", sans-serif;
   --mono: "Space Mono", monospace;
@@ -296,6 +308,37 @@ img {
   opacity: 0.6;
   transform: scale(1.015);
   animation: hero-image-drift 32s ease-in-out infinite alternate;
+}
+
+.home-hero-ambience {
+  position: absolute;
+  z-index: 1;
+  inset: 0;
+  overflow: hidden;
+  pointer-events: none;
+  opacity: 0;
+  animation: hero-ambience-enter 900ms ease-out 120ms forwards;
+}
+
+.home-hero-ambience::before {
+  position: absolute;
+  inset: -8%;
+  content: "";
+  background: radial-gradient(ellipse at 73% 48%, var(--color-motion-glow), transparent 48%);
+  transform: scale(0.98);
+  animation: hero-ambience-breathe 9s ease-in-out 1s infinite alternate;
+}
+
+@keyframes hero-ambience-enter {
+  to {
+    opacity: 1;
+  }
+}
+
+@keyframes hero-ambience-breathe {
+  to {
+    transform: scale(1.06);
+  }
 }
 
 @keyframes hero-image-drift {
@@ -908,14 +951,14 @@ img {
   align-items: center;
   gap: 7px;
   margin: 19px 0 24px;
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 11px;
 }
 
 .project-disclaimer,
 .legal-note {
   margin: 22px 0 0;
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 10px;
   line-height: 1.65;
 }
@@ -1090,25 +1133,60 @@ img {
   flex: 0 0 auto;
 }
 
-.cta-orbit {
+.cta-rays {
   position: absolute;
-  width: 390px;
-  height: 390px;
-  border: 1px solid rgba(244, 190, 24, 0.2);
-  border-radius: 50%;
+  top: 50%;
+  right: -340px;
+  width: 900px;
+  aspect-ratio: 1;
+  overflow: hidden;
+  color: var(--gold-solar);
+  opacity: 0.1;
   pointer-events: none;
+  transform: translateY(-50%);
+  -webkit-mask-image: radial-gradient(circle, transparent 7%, #000 26%, #000 56%, transparent 78%);
+  mask-image: radial-gradient(circle, transparent 7%, #000 26%, #000 56%, transparent 78%);
 }
 
-.cta-orbit-one {
-  top: -220px;
-  right: 11%;
+.cta-rays-svg {
+  display: block;
+  width: 100%;
+  height: 100%;
+  transform-origin: center;
+  animation: cta-rays-rotate 120s linear infinite;
 }
 
-.cta-orbit-two {
-  top: -175px;
-  right: calc(11% + 44px);
-  width: 300px;
-  height: 300px;
+@keyframes cta-rays-rotate {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.reveal-text {
+  display: block;
+}
+
+.reveal-text-mask {
+  display: inline-block;
+  overflow: hidden;
+  padding-block: 0.08em;
+  margin-block: -0.08em;
+  vertical-align: bottom;
+}
+
+.reveal-text-word {
+  display: inline-block;
+  transform: translateY(110%);
+  transition: transform 700ms cubic-bezier(0.2, 0.65, 0.3, 1);
+  transition-delay: var(--word-delay, 0ms);
+}
+
+.reveal-text-accent {
+  color: var(--gold);
+}
+
+.reveal-text.is-visible .reveal-text-word {
+  transform: translateY(0);
 }
 
 .site-footer {
@@ -1511,6 +1589,26 @@ img {
   gap: clamp(50px, 10vw, 150px);
 }
 
+.business-sector-figure {
+  grid-column: 1 / -1;
+  min-width: 0;
+  margin: 0;
+}
+
+.business-sector-figure img {
+  width: 100%;
+  max-height: 460px;
+  aspect-ratio: 2.2;
+  object-fit: cover;
+  object-position: center 52%;
+}
+
+.business-sector-figure figcaption {
+  margin-top: 10px;
+  color: var(--color-text-muted);
+  font-size: 12px;
+}
+
 .energy-intro h2,
 .business-content h2 {
   max-width: 530px;
@@ -1573,7 +1671,7 @@ img {
 }
 
 .project-snapshot dt {
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-family: var(--mono);
   font-size: 9px;
   line-height: 1.6;
@@ -1592,7 +1690,7 @@ img {
   margin: 17px 0 0;
   padding-top: 14px;
   border-top: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 10px;
   line-height: 1.7;
 }
@@ -1869,7 +1967,7 @@ img {
   margin-top: 28px;
   padding-top: 18px;
   border-top: 1px solid var(--line);
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .contact-note svg {
@@ -1922,7 +2020,7 @@ img {
 
 .contact-form input::placeholder,
 .contact-form textarea::placeholder {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .contact-form [aria-invalid="true"] {
@@ -1936,7 +2034,7 @@ img {
 }
 
 .contact-form select:invalid {
-  color: var(--muted);
+  color: var(--color-text-muted);
 }
 
 .form-row {
@@ -1962,7 +2060,7 @@ img {
 
 .form-privacy {
   margin: -6px 0 0;
-  color: var(--muted);
+  color: var(--color-text-muted);
   font-size: 10px;
   line-height: 1.65;
 }
@@ -2033,7 +2131,19 @@ img {
 
 .reveal:not(.is-visible) {
   opacity: 0;
-  transform: translateY(18px);
+  transform: translateY(26px);
+}
+
+.reveal:not(.is-visible).reveal-from-down {
+  transform: translateY(-26px);
+}
+
+.reveal:not(.is-visible).reveal-from-left {
+  transform: translateX(26px);
+}
+
+.reveal:not(.is-visible).reveal-from-right {
+  transform: translateX(-26px);
 }
 
 .reveal:focus-within {
@@ -2123,8 +2233,8 @@ img {
 
   .menu-toggle {
     display: grid;
-    width: 42px;
-    height: 42px;
+    width: 44px;
+    height: 44px;
     place-items: center;
     border: 1px solid currentColor;
     color: inherit;
@@ -2173,6 +2283,14 @@ img {
   .home-hero-photo {
     background-position: 60% center;
     opacity: 0.42;
+  }
+
+  .home-hero-ambience {
+    opacity: 0.65;
+  }
+
+  .home-hero-ambience::before {
+    animation-duration: 10s;
   }
 
   .home-hero-shade {
@@ -2523,6 +2641,11 @@ img {
   .project-snapshot dl > div {
     grid-template-columns: 0.66fr 1.34fr;
   }
+
+  .cta-rays {
+    right: -300px;
+    width: 620px;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -2538,6 +2661,25 @@ img {
 
   .reveal:not(.is-visible) {
     opacity: 1;
+    transform: none;
+  }
+
+  .reveal-text-word {
+    transform: none;
+    transition: none;
+  }
+
+  .home-hero-ambience,
+  .home-hero-ambience::before,
+  .cta-rays-svg {
+    animation: none;
+  }
+
+  .home-hero-ambience {
+    opacity: 0.25;
+  }
+
+  .home-hero-ambience::before {
     transform: none;
   }
 

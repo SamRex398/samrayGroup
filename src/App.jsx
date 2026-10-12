@@ -43,8 +43,7 @@ const SECTORS = [
     label: "Other interests",
     href: "/businesses/sports",
     icon: Trophy,
-    image: null,
-    visual: "sport",
+    image: IMG.sports,
     copy: "Creating opportunities for athletes through specialist facilities and development pathways.",
     number: "03",
   },
@@ -53,8 +52,7 @@ const SECTORS = [
     label: "Group interests",
     href: "/businesses/technology-media",
     icon: Clapperboard,
-    image: null,
-    visual: "digital",
+    image: IMG.technologyMedia,
     copy: "Exploring production, visual communications and digital platform capabilities.",
     number: "04",
   },
@@ -248,9 +246,49 @@ function PageMeta({ page }) {
   return null;
 }
 
-function Reveal({ children, className = "", delay = 0 }) {
+function Reveal({ children, className = "", delay = 0, direction = "up", threshold = 0.12 }) {
   const ref = useRef(null);
   const [visible, setVisible] = useState(false);
+
+  useEffect(() => {
+    const node = ref.current;
+    if (
+      !node ||
+      !("IntersectionObserver" in window) ||
+      window.matchMedia("(prefers-reduced-motion: reduce)").matches
+    ) {
+      setVisible(true);
+      return undefined;
+    }
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setVisible(true);
+          observer.disconnect();
+        }
+      },
+      { threshold }
+    );
+    observer.observe(node);
+    return () => observer.disconnect();
+  }, []);
+
+  return (
+    <div
+      ref={ref}
+      className={`reveal reveal-from-${direction} ${visible ? "is-visible" : ""} ${className}`}
+      style={{ "--reveal-delay": `${delay}ms` }}
+    >
+      {children}
+    </div>
+  );
+}
+
+function RevealText({ text, as: Element = "span", className = "", lineBreakAfter = [], accentFromWord = -1 }) {
+  const ref = useRef(null);
+  const [visible, setVisible] = useState(false);
+  const words = text.trim().split(/\s+/);
 
   useEffect(() => {
     const node = ref.current;
@@ -277,12 +315,44 @@ function Reveal({ children, className = "", delay = 0 }) {
   }, []);
 
   return (
-    <div
+    <Element
       ref={ref}
-      className={`reveal ${visible ? "is-visible" : ""} ${className}`}
-      style={{ "--reveal-delay": `${delay}ms` }}
+      className={`reveal-text ${visible ? "is-visible" : ""} ${className}`}
+      aria-label={text}
     >
-      {children}
+      <span aria-hidden="true">
+        {words.map((word, index) => (
+          <span key={`${word}-${index}`}>
+            <span className="reveal-text-mask">
+              <span className={`reveal-text-word ${index >= accentFromWord ? "reveal-text-accent" : ""}`} style={{ "--word-delay": `${index * 55}ms` }}>{word}</span>
+            </span>
+            {index < words.length - 1 && " "}
+            {lineBreakAfter.includes(index + 1) && <br />}
+          </span>
+        ))}
+      </span>
+    </Element>
+  );
+}
+
+function RadialRayBackground() {
+  return (
+    <div className="cta-rays" aria-hidden="true">
+      <svg className="cta-rays-svg" viewBox="0 0 600 600" focusable="false">
+        {Array.from({ length: 36 }, (_, index) => (
+          <line
+            key={index}
+            x1="300"
+            y1="300"
+            x2="300"
+            y2="0"
+            transform={`rotate(${index * 10} 300 300)`}
+            stroke="currentColor"
+            strokeWidth="1"
+          />
+        ))}
+        <circle cx="300" cy="300" r="3" fill="currentColor" />
+      </svg>
     </div>
   );
 }
@@ -477,16 +547,15 @@ function ProjectCard({ project }) {
 function ClosingCta({ title = "Let's build what comes next.", copy = "Talk to us about a project, a partnership or where your capabilities meet our ambitions.", button = "Start a conversation" }) {
   return (
     <section className="closing-cta">
+      <RadialRayBackground />
       <div className="container closing-cta-inner">
         <div>
           <Eyebrow light>Work with Samray</Eyebrow>
-          <h2>{title}</h2>
+          <RevealText as="h2" text={title} />
           <p>{copy}</p>
         </div>
         <ButtonLink href="/contact">{button}</ButtonLink>
       </div>
-      <div className="cta-orbit cta-orbit-one" aria-hidden="true" />
-      <div className="cta-orbit cta-orbit-two" aria-hidden="true" />
     </section>
   );
 }
@@ -541,10 +610,11 @@ function HomePage() {
           <div className="home-hero-photo" style={{ backgroundImage: `url("${IMG.heroRig}")` }} aria-hidden="true" />
           <div className="home-hero-shade" aria-hidden="true" />
           <div className="hero-grid" aria-hidden="true" />
+          <div className="home-hero-ambience" aria-hidden="true" />
           <div className="container home-hero-content">
             <Reveal>
               <Eyebrow light><span className="status-dot" />A Nigerian-rooted group</Eyebrow>
-              <h1>Building what<br /><em>moves us forward.</em></h1>
+              <RevealText as="h1" className="home-hero-title" text="Building what moves us forward." lineBreakAfter={[2]} accentFromWord={3} />
               <p className="hero-copy">Samray brings together energy infrastructure, agriculture, sports and technology &amp; media to create lasting opportunity across Africa.</p>
               <div className="hero-actions">
                 <ButtonLink href="/projects">Explore our projects</ButtonLink>
@@ -850,11 +920,11 @@ function BusinessPage({ sector }) {
     },
     sports: {
       page: "sports", headline: <>Make room for<br /><em>the next generation.</em></>, copy: PAGE_META.sports[1],
-      eyebrow: "Samray Sports Academy / sports", body: "Samray Sports Academy established Lagos Fencing Club, the first purpose-built fencing facility in West Africa, designed to international FIE standards. Backed by $150,000 in private investment, it offers professional pistes, digital scoring and a development pathway for elite and recreational fencers, and hosts regional competitions and talent programs.", points: ["Purpose-built fencing facility", "International FIE standards", "Athlete development pathways", "Regional competitions and talent programs"], link: "/otherinterests", linkText: "View other interests", image: null,
+      eyebrow: "Samray Sports Academy / sports", body: "Samray Sports Academy established Lagos Fencing Club, the first purpose-built fencing facility in West Africa, designed to international FIE standards. Backed by $150,000 in private investment, it offers professional pistes, digital scoring and a development pathway for elite and recreational fencers, and hosts regional competitions and talent programs.", points: ["Purpose-built fencing facility", "International FIE standards", "Athlete development pathways", "Regional competitions and talent programs"], link: "/otherinterests", linkText: "View other interests", image: IMG.sports, imageAlt: "Football on a grass field at sunset; illustrative sports imagery, not Samray's fencing facility.",
     },
     "technology-media": {
       page: "technology-media", headline: <>Ideas made visible.<br /><em>Platforms made useful.</em></>, copy: PAGE_META["technology-media"][1],
-      eyebrow: "Samray Group / technology & media", body: "Samray Group's Technology & Media interests explore production, visual communications and digital platform capabilities. This work sits within the wider group and is distinct from Samray Energy Solutions' public energy business.", points: ["Content production", "Visual communications", "Digital platform capabilities", "Group-level interests"], link: "/", linkText: "Explore Samray Group", image: null,
+      eyebrow: "Samray Group / technology & media", body: "Samray Group's Technology & Media interests explore production, visual communications and digital platform capabilities. This work sits within the wider group and is distinct from Samray Energy Solutions' public energy business.", points: ["Content production", "Visual communications", "Digital platform capabilities", "Group-level interests"], link: "/", linkText: "Explore Samray Group", image: IMG.technologyMedia, imageAlt: "Laptop and creative equipment in a media workspace; illustrative image, not a confirmed Samray project.",
     },
   }[sector];
   if (!content) return <NotFoundPage />;
@@ -864,7 +934,7 @@ function BusinessPage({ sector }) {
       <PageMeta page={content.page} /><Header darkHero energy={sector === "energy"} />
       <main id="top">
         <PageHero eyebrow={content.eyebrow} title={content.headline} copy={content.copy} image={content.image} actions={<ButtonLink href={sector === "energy" ? "/projects" : "/contact"}>{sector === "energy" ? "View our projects" : "Contact Samray"}</ButtonLink>} />
-        <section className="section-pad"><div className="container business-content"><div><Eyebrow>{sectorTitle} / overview</Eyebrow><h2>{sector === "energy" ? "Dependable power, developed with purpose." : sectorTitle}</h2></div><div className="text-prose"><p>{content.body}</p><ul className="check-list">{content.points.map((point) => <li key={point}><Check size={16} aria-hidden="true" />{point}</li>)}</ul><ArrowLink href={content.link}>{content.linkText}</ArrowLink></div></div></section>
+        <section className="section-pad"><div className="container business-content"><div><Eyebrow>{sectorTitle} / overview</Eyebrow><h2>{sector === "energy" ? "Dependable power, developed with purpose." : sectorTitle}</h2></div><div className="text-prose"><p>{content.body}</p><ul className="check-list">{content.points.map((point) => <li key={point}><Check size={16} aria-hidden="true" />{point}</li>)}</ul><ArrowLink href={content.link}>{content.linkText}</ArrowLink></div>{content.image && <figure className="business-sector-figure"><img src={content.image} alt={content.imageAlt} loading="lazy" /><figcaption>Illustrative image; not a depiction of a confirmed Samray site or project.</figcaption></figure>}</div></section>
         {sector === "energy" && <section className="featured-projects section-pad"><div className="container"><SectionTitle eyebrow="Energy / selected projects" title="Projects in development." /><div className="project-grid">{PROJECTS.map((project) => <ProjectCard project={project} key={project.href} />)}</div></div></section>}
         {sector !== "energy" && <section className="interest-context section-pad"><div className="container"><Eyebrow>Part of Samray Group</Eyebrow><h2>Independent focus.<br /><span>Connected ambition.</span></h2><p>Explore the wider portfolio and the sectors where Samray is building long-term opportunity.</p><ArrowLink href="/">Discover the group</ArrowLink></div></section>}
         <ClosingCta title={sector === "energy" ? "Let's talk about energy." : `Learn more about ${sectorTitle}.`} copy="Get in touch with Samray to start a conversation." />

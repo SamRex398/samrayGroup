@@ -95,13 +95,16 @@ company contact details before launch.
 ## Assets and launch checks
 
 The supplied `public/logo-light-bg.png` and `public/logo-dark-bg.png` logos are used
-throughout the shared header and footer. The current photography references remote
-Unsplash images in `src/lib/images.js` as visual placeholders; replace them with
-approved, licensed Samray photography before launch. Confirm project facts, project
-statuses, rights to publish the client and end-user references listed on the
-Experience page, leadership and governance details, image permissions, contact
-details, legal copy, and privacy handling before publication. The source content
-still has unresolved registered-address, email, telephone, and response-time fields.
-The About-page portfolio map describes areas of focus, not legal ownership or
-reporting lines. Technology & Media remains a Group-level interest per the Group
-redesign direction and is excluded from Samray Energy Solutions pages.
+throughout the shared header and footer. The Sports and Technology & Media portfolio
+cards and sector pages use the supplied `public/samraySportsImage.png` and
+`public/samraytechandmedia.png` as explicitly illustrative imagery, not as evidence
+of a Samray site or project. Other photography references remote Unsplash images in
+`src/lib/images.js` as visual placeholders; replace them with approved, licensed
+Samray photography before launch. Confirm project facts, project statuses, rights to
+publish the client and end-user references listed on the Experience page, leadership
+and governance details, image permissions, contact details, legal copy, and privacy
+handling before publication. The source content still has unresolved
+registered-address, email, telephone, and response-time fields. The About-page
+portfolio map describes areas of focus, not legal ownership or reporting lines.
+Technology & Media remains a Group-level interest per the Group redesign direction
+and is excluded from Samray Energy Solutions pages.
