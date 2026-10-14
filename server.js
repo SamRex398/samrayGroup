@@ -17,7 +17,6 @@ const ALLOWED_INTERESTS = new Set([
   "Technical services",
   "Agriculture",
   "Sports",
-  "Technology & Media",
   "Careers",
   "Other",
 ]);

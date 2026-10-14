@@ -1,9 +1,8 @@
 # Samray Group — Website
 
 A responsive React and Vite website for Samray Group. The Group site brings together
-Energy, Agriculture, Sports, and Technology & Media. Samray Energy Solutions has its
-own routes and uses the approved energy website copy; Technology & Media appears only
-as a Group-level interest.
+Energy, Agriculture, and Sports. Samray Energy Solutions has its own routes and uses
+the approved energy website copy.
 
 ## Run locally
 
@@ -25,7 +24,6 @@ The site uses clean URL paths, so production hosting must rewrite unknown paths 
 | `/businesses/energy` | Samray Energy Solutions |
 | `/businesses/agriculture` | Agriculture |
 | `/businesses/sports` | Sports |
-| `/businesses/technology-media` | Technology & Media (Group only) |
 | `/whatwedo` | Energy development and technical services |
 | `/projects` | Solar project portfolio |
 | `/projects/drc` | DRC solar PV project |
@@ -95,10 +93,9 @@ company contact details before launch.
 ## Assets and launch checks
 
 The supplied `public/logo-light-bg.png` and `public/logo-dark-bg.png` logos are used
-throughout the shared header and footer. The Sports and Technology & Media portfolio
-cards and sector pages use the supplied `public/samraySportsImage.png` and
-`public/samraytechandmedia.png` as explicitly illustrative imagery, not as evidence
-of a Samray site or project. Other photography references remote Unsplash images in
+throughout the shared header and footer. The Sports portfolio card and sector page use
+the supplied `public/samraySportsImage.png` as explicitly illustrative imagery, not
+as evidence of a Samray site or project. Other photography references remote Unsplash images in
 `src/lib/images.js` as visual placeholders; replace them with approved, licensed
 Samray photography before launch. Confirm project facts, project statuses, rights to
 publish the client and end-user references listed on the Experience page, leadership
@@ -106,5 +103,4 @@ and governance details, image permissions, contact details, legal copy, and priv
 handling before publication. The source content still has unresolved
 registered-address, email, telephone, and response-time fields. The About-page
 portfolio map describes areas of focus, not legal ownership or reporting lines.
-Technology & Media remains a Group-level interest per the Group redesign direction
-and is excluded from Samray Energy Solutions pages.
+Agriculture and Sports are Group-level interests alongside the core energy business.

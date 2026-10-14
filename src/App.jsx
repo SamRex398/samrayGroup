@@ -4,7 +4,6 @@ import {
   ArrowUpRight,
   Check,
   ChevronRight,
-  Clapperboard,
   Factory,
   Globe2,
   Handshake,
@@ -27,6 +26,7 @@ const SECTORS = [
     icon: Sun,
     image: IMG.solar,
     copy: "Developing solar and hybrid power infrastructure for industry and communities across Africa.",
+    highlights: ["Utility-scale solar", "Solar hybridization", "Technical energy services"],
     number: "01",
   },
   {
@@ -46,15 +46,6 @@ const SECTORS = [
     image: IMG.sports,
     copy: "Creating opportunities for athletes through specialist facilities and development pathways.",
     number: "03",
-  },
-  {
-    name: "Technology & Media",
-    label: "Group interests",
-    href: "/businesses/technology-media",
-    icon: Clapperboard,
-    image: IMG.technologyMedia,
-    copy: "Exploring production, visual communications and digital platform capabilities.",
-    number: "04",
   },
 ];
 
@@ -146,7 +137,6 @@ const ROUTES = {
   "/businesses/energy": "energy",
   "/businesses/agriculture": "agriculture",
   "/businesses/sports": "sports",
-  "/businesses/technology-media": "technology-media",
 };
 
 const NAV_LINKS = [
@@ -160,7 +150,7 @@ const NAV_LINKS = [
 const PAGE_META = {
   home: [
     "Samray Group | Building Africa's future",
-    "Samray Group brings together energy infrastructure, agriculture, sports, and technology and media interests.",
+    "Samray Group brings together energy infrastructure, agriculture and sports interests.",
   ],
   about: [
     "About Samray Group",
@@ -211,10 +201,6 @@ const PAGE_META = {
   sports: [
     "Sports | Samray Group",
     "Samray Sports Academy supports fencing through specialist facilities and athlete pathways.",
-  ],
-  "technology-media": [
-    "Technology & Media | Samray Group",
-    "Samray Group's interests in content production, visual communications and digital platforms.",
   ],
 };
 
@@ -520,6 +506,11 @@ function SectorCard({ sector, compact = false }) {
         <span className="card-label">{sector.label}</span>
         <h3>{sector.name}</h3>
         <p>{sector.copy}</p>
+        {sector.highlights && (
+          <ul className="sector-highlights" aria-label="Energy capabilities">
+            {sector.highlights.map((highlight) => <li key={highlight}>{highlight}</li>)}
+          </ul>
+        )}
         <span className="card-arrow" aria-hidden="true"><ArrowUpRight size={19} /></span>
       </div>
     </a>
@@ -562,7 +553,6 @@ function ClosingCta({ title = "Let's build what comes next.", copy = "Talk to us
 
 function Footer({ energy = false }) {
   const legalName = energy ? "Samray Energy Solutions Ltd" : "Samray Group";
-  const footerSectors = energy ? SECTORS.filter((sector) => sector.name !== "Technology & Media") : SECTORS;
   return (
     <footer className="site-footer">
       <div className="container">
@@ -581,7 +571,7 @@ function Footer({ energy = false }) {
           </div>
           <div className="footer-column">
             <span className="footer-heading">Our businesses</span>
-            {footerSectors.map((sector) => <a href={sector.href} key={sector.name}>{sector.name}</a>)}
+            {SECTORS.map((sector) => <a href={sector.href} key={sector.name}>{sector.name}</a>)}
             <a href="/otherinterests">Other interests</a>
           </div>
           <div className="footer-contact">
@@ -615,7 +605,7 @@ function HomePage() {
             <Reveal>
               <Eyebrow light><span className="status-dot" />A Nigerian-rooted group</Eyebrow>
               <RevealText as="h1" className="home-hero-title" text="Building what moves us forward." lineBreakAfter={[2]} accentFromWord={3} />
-              <p className="hero-copy">Samray brings together energy infrastructure, agriculture, sports and technology &amp; media to create lasting opportunity across Africa.</p>
+              <p className="hero-copy">Samray brings together energy infrastructure, agriculture and sports to create lasting opportunity across Africa.</p>
               <div className="hero-actions">
                 <ButtonLink href="/projects">Explore our projects</ButtonLink>
                 <a className="button button-outline" href="/about">Discover Samray <ArrowUpRight size={16} /></a>
@@ -635,16 +625,16 @@ function HomePage() {
               <ArrowLink href="/about">Meet Samray Group</ArrowLink>
             </Reveal>
           </div>
-          <div className="container"><StatStrip dark items={[["03", "countries of technical project experience"], ["02", "solar programs in development"], ["04", "connected group interests"], ["Offshore + onshore", "technical services experience"]]} /></div>
+          <div className="container"><StatStrip dark items={[["03", "countries of technical project experience"], ["02", "solar programs in development"], ["03", "connected group interests"], ["Offshore + onshore", "technical services experience"]]} /></div>
         </section>
 
         <section className="sectors-section section-pad">
           <div className="container">
             <Reveal><SectionTitle eyebrow="The Samray portfolio" title="Different strengths. Shared ambition." copy="A portfolio of businesses with the focus to build lasting value and the perspective to see the bigger picture." /></Reveal>
             <div className="sector-grid">
-              {SECTORS.map((sector, index) => <Reveal delay={index * 90} key={sector.name}><SectorCard sector={sector} /></Reveal>)}
+              {SECTORS.map((sector, index) => <Reveal className={index === 0 ? "sector-featured" : "sector-secondary"} delay={index * 90} key={sector.name}><SectorCard sector={sector} /></Reveal>)}
             </div>
-            <div className="portfolio-note"><span>01—04</span><p>Energy is our core business. Agriculture, sports and technology &amp; media are distinct interests within the wider group.</p></div>
+            <div className="portfolio-note"><span>01—03</span><p>Energy is our core business. Agriculture and sports are smaller, distinct interests within the wider group.</p></div>
           </div>
         </section>
 
@@ -685,7 +675,6 @@ function HomePage() {
                 ["Energy", "Reliable power", "Developing solar and hybrid infrastructure for mining, industrial and community customers."],
                 ["Agriculture", "A stronger value chain", "Connecting cultivation and processing with dependable supply for buyers."],
                 ["Sports", "Pathways to participate", "Supporting fencing facilities, competition and development pathways for athletes."],
-                ["Technology & Media", "Ideas and connection", "Exploring production, visual communications and digital platforms at Group level."],
               ].map(([sector, title, copy]) => (
                 <article className="impact-card" key={sector}>
                   <span>{sector}</span>
@@ -713,7 +702,7 @@ function HomePage() {
         <section className="other-interests-strip">
           <div className="container other-strip-inner">
             <div><span className="other-strip-index">BEYOND ENERGY</span><h2>More ways to move forward.</h2></div>
-            <p>Alongside our core energy business, Samray maintains selected interests in Agriculture, Sports and Technology &amp; Media.</p>
+            <p>Alongside our core energy business, Samray maintains smaller, selected interests in Agriculture and Sports.</p>
             <ArrowLink href="/otherinterests">Explore our interests</ArrowLink>
           </div>
         </section>
@@ -741,8 +730,8 @@ function AboutPage() {
             <Reveal>
               <SectionTitle
                 eyebrow="Our ecosystem"
-                title="Four areas. One group."
-                copy="Explore the businesses and interests that make up Samray Group."
+                title="Three areas. One group."
+                copy="Explore Samray Energy Solutions and the Group's interests in agriculture and sports."
               />
             </Reveal>
             <div className="ecosystem-map" aria-label="Samray Group portfolio map">
@@ -922,13 +911,9 @@ function BusinessPage({ sector }) {
       page: "sports", headline: <>Make room for<br /><em>the next generation.</em></>, copy: PAGE_META.sports[1],
       eyebrow: "Samray Sports Academy / sports", body: "Samray Sports Academy established Lagos Fencing Club, the first purpose-built fencing facility in West Africa, designed to international FIE standards. Backed by $150,000 in private investment, it offers professional pistes, digital scoring and a development pathway for elite and recreational fencers, and hosts regional competitions and talent programs.", points: ["Purpose-built fencing facility", "International FIE standards", "Athlete development pathways", "Regional competitions and talent programs"], link: "/otherinterests", linkText: "View other interests", image: IMG.sports, imageAlt: "Football on a grass field at sunset; illustrative sports imagery, not Samray's fencing facility.",
     },
-    "technology-media": {
-      page: "technology-media", headline: <>Ideas made visible.<br /><em>Platforms made useful.</em></>, copy: PAGE_META["technology-media"][1],
-      eyebrow: "Samray Group / technology & media", body: "Samray Group's Technology & Media interests explore production, visual communications and digital platform capabilities. This work sits within the wider group and is distinct from Samray Energy Solutions' public energy business.", points: ["Content production", "Visual communications", "Digital platform capabilities", "Group-level interests"], link: "/", linkText: "Explore Samray Group", image: IMG.technologyMedia, imageAlt: "Laptop and creative equipment in a media workspace; illustrative image, not a confirmed Samray project.",
-    },
   }[sector];
   if (!content) return <NotFoundPage />;
-  const sectorTitle = sector === "technology-media" ? "Technology & Media" : sector[0].toUpperCase() + sector.slice(1);
+  const sectorTitle = sector[0].toUpperCase() + sector.slice(1);
   return (
     <>
       <PageMeta page={content.page} /><Header darkHero energy={sector === "energy"} />
@@ -1067,7 +1052,7 @@ function ContactPage() {
                 <label htmlFor="contact-interest">Area of interest</label>
                 <select id="contact-interest" name="interest" defaultValue={initialInterest} aria-required="true" aria-invalid={Boolean(fieldErrors.interest)} aria-describedby={fieldErrors.interest ? "interest-error" : undefined}>
                   <option value="" disabled>Select an area</option>
-                  {["General enquiry", "Energy", "Project information", "Project finance", "Technical partnership", "Partnership", "Power purchase", "Technical services", "Agriculture", "Sports", "Technology & Media", "Careers", "Other"].map((item) => <option key={item} value={item}>{item}</option>)}
+                  {["General enquiry", "Energy", "Project information", "Project finance", "Technical partnership", "Partnership", "Power purchase", "Technical services", "Agriculture", "Sports", "Careers", "Other"].map((item) => <option key={item} value={item}>{item}</option>)}
                 </select>
                 {fieldErrors.interest && <span className="field-error" id="interest-error" role="alert">{fieldErrors.interest}</span>}
               </div>
@@ -1124,6 +1109,6 @@ export default function App() {
   if (page === "contact") return <ContactPage />;
   if (page === "legal") return <LegalPage />;
   if (page === "privacy") return <LegalPage privacy />;
-  if (page === "energy" || page === "agriculture" || page === "sports" || page === "technology-media") return <BusinessPage sector={page} />;
+  if (page === "energy" || page === "agriculture" || page === "sports") return <BusinessPage sector={page} />;
   return <NotFoundPage />;
 }

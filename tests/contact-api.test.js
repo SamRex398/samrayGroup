@@ -75,7 +75,7 @@ test("delivers a valid enquiry to Resend with reply-to and no browser secret", a
   assert.equal(mail.website, undefined);
 });
 
-test("rejects invalid enquiry data without calling Resend", async () => {
+test("rejects removed Technology & Media enquiries without calling Resend", async () => {
   let called = false;
   const baseUrl = await startApi({
     fetchImpl: async () => {
@@ -84,7 +84,7 @@ test("rejects invalid enquiry data without calling Resend", async () => {
     },
   });
 
-  const response = await postEnquiry(baseUrl, { ...validEnquiry, interest: "Unexpected" });
+  const response = await postEnquiry(baseUrl, { ...validEnquiry, interest: "Technology & Media" });
 
   assert.equal(response.status, 400);
   assert.equal(called, false);
